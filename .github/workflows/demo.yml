@@ -31,11 +31,17 @@ jobs:
           name: dist-files
           path: |
             dist
-            index.html
-             
+        
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files 
+      - name: List outputs
+        run: ls    
       - name: Deploy
         run: echo "Deploying..."
