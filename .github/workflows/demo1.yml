@@ -24,13 +24,15 @@ jobs:
           uses: actions/checkout@v4
         - name: install dependencies
           run: npm ci 
+        - name: run build
+          run: npm run build          
         - name: upload-artifact
           uses: actions/upload-artifact@v4
           with:
            name: dist-files
            path: |
              dist
-             index.html
+             index.html     
         - name: Publish JS filename
           id: publish
           run: find dist/assets/*.js -type f -execdir echo "script-file {}" >> GITHUB_OUTPUT ';'
