@@ -53,3 +53,5 @@ jobs:
                run: ls 
              - name: Output content
                uses: echo "${{ needs.build.outputs.script-file }}"   
+
+               # this is new
