@@ -36,8 +36,8 @@ jobs:
           name: dist-files
           path: |
             dist
-        
-
+            index.html
+             
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
           name: dist-files 
       - name: List outputs
         run: ls    
-      - name: Output filename
-        run: echo "${{ needs.build.output.script-file }}"
+      - name: Publish output
+         run:echo "$ {{ needs.build.outputs.script-file }}" 
       - name: Deploy
         run: echo "Deploying..."
