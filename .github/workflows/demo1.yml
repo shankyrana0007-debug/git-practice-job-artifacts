@@ -1,0 +1,54 @@
+name: deploy website
+on:
+  push:
+     brances:
+        master
+jobs: 
+   test: 
+     runs-on: ubuntu-latest
+     steps:
+       - name: get code
+         uses: actions/checkout@v4
+       - name: install dependencies
+         run: npm ci
+       - name: run test
+         run: npm run test
+
+   build:
+      runs-on: ubuntu-latest
+      needs: test
+      outputs:
+         script-file: ${{ steps.publish.outputs.script-file }}
+      steps:
+        - name: get code
+          uses: actions/checkout@v4
+        - name: install dependencies
+          run: npm ci 
+        - name: upload-artifact
+          uses: actions/upload-artifact@v4
+          with:
+           name: dist-files
+           path: |
+             dist
+             index.html
+        - name: Publish JS filename
+          id: publish
+          run: find dist/assets/*.js -type f -execdir echo "script-file {}" >> GITHUB_OUTPUT ';'
+   
+    deploy:
+
+           runs-on: ubuntu-latest
+           needs: build
+           steps:
+             - name: get code
+               uses: actions/checkout@v4
+             - name: install dependencies
+               run: npm ci
+             - name: Download artifacts
+               uses: actions/download-artifact@v4
+               with:
+                name: dist-files 
+             - name: List outputs
+               run: ls 
+             - name: Output content
+               uses: echo "${{ needs.build.outputs.script-file }}"   
