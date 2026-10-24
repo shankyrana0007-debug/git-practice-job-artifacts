@@ -35,7 +35,7 @@ jobs:
              index.html     
         - name: Publish JS filename
           id: publish
-          run: find dist/assets/*.js -type f -execdir echo "script-file {}" >> GITHUB_OUTPUT ';'
+          run: find dist/assets/*.js -type f -execdir echo "script-file{}" >> "GITHUB_OUTPUT" ';'
    
    deploy:
 
@@ -53,6 +53,6 @@ jobs:
              - name: List outputs
                run: ls 
              - name: Output content
-               run: echo"${{ needs.build.outputs.script-file }}"   
+               run: echo "${{ needs.build.outputs.script-file }}"   
 
                # this is new
