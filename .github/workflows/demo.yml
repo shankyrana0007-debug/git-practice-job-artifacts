@@ -49,6 +49,6 @@ jobs:
       - name: List outputs
         run: ls    
       - name: Publish output
-         run:echo "${{ needs.build.outputs.script-file }}" 
+        run:echo "${{ needs.build.outputs.script-file }}" 
       - name: Deploy
         run: echo "Deploying..."
